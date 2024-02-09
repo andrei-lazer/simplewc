@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
 struct fileStats {
   int lines;
   int words;
@@ -27,23 +28,21 @@ void print_help() {
 int simplewc_str(const char *str, struct fileStats *stats, int state) {
   int len = strlen(str);
 
-  // defines whether in a word or in whitespace.
+  // `state` defines whether in a word or in whitespace.
   // 0 = whitespace, 1 = word
   //
-  // state is passed as an argument so that I can process the file in chunks,
-  // and I don't lose track of where word boundaries are. An example is if I had
-  // a word "aaa..." with 100 "a"s, then at the chunk boundary, state would be
-  // reset to 0 and I would get an output of 2 words rather than one
+  // state is passed as an argument to keep track of whether the parser is in a
+  // word or not at the chunk boundary.
+
   int i;
   char c;
+
   for (i = 0; i < len; i++) {
     c = str[i];
     if (isspace(c)) {
       state = 0;
 
-      if (c == '\n') {
-        stats->lines++;
-      }
+      if (c == '\n') {stats->lines++;}
 
     } else if (state == 0) {
       state = 1;
