@@ -1,0 +1,8 @@
+./tests/__pycache__/
+./tests/.hypothesis/
+./tests/.pytest_cache/
+.git
+.hypothesis
+.pytest_cache
+simplewc
+simplewc.o
