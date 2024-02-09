@@ -13,7 +13,7 @@ Then, build:
 
 ## Usage
 
-`wc FILE...`
+`./simplewc FILE...`
 
 Print total newline, word, and byte counts for all FILEs given.
 
@@ -23,5 +23,10 @@ terminating <newline> character.
 
 At least one FILE must be given as input
 
+## Testing
 
+Running `./simplewc --test` will run all the C unit tests, with output.
+
+For more thorough property-based testing using the [Hypothesis](https://github.com/HypothesisWorks/hypothesis) module, run:
+`python testing/prop_tests.py`
 

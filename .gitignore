@@ -1,8 +1,14 @@
 ./tests/__pycache__/
 ./tests/.hypothesis/
 ./tests/.pytest_cache/
+
 .git
 .hypothesis
 .pytest_cache
+
+afl-finding
+af1-finding
+testcases
+
 simplewc
 simplewc.o
