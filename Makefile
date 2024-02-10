@@ -1,4 +1,3 @@
-#CC = ~/notes/nvidia/AFL/afl-gcc 
 CC = gcc
 
 simplewc: simplewc.o

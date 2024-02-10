@@ -1,5 +1,5 @@
-#ifndef SIMPLEWC_H
-#define SIMPLEWC_H
+#ifndef FUNCTIONS_H
+#define FUNCTIONS_H
 
 #include <ctype.h>
 #include <stdbool.h>
@@ -7,12 +7,23 @@
 #include <stdlib.h>
 #include <string.h>
 
+/* WordState is An enum to keep track of the 'state' of the parser at chunk
+ * boundaries. Files are read and parsed in chunks, so to avoid overcounting
+ * words (if we're inside a word at a chunk boundary), the state is always
+ * passed from chunk to chunk.
+ */
+enum WordState { OUT, IN };
+
+// simple struct to keep counts all in one place
 struct fileStats {
   int lines;
   int words;
   int bytes;
 };
 
+/* print_help: used to print the help message when invalid input or the "-h" argument is
+ * provided.
+ */
 void print_help() {
   FILE *help_file;
   help_file = fopen("./help.txt", "r");
@@ -25,14 +36,22 @@ void print_help() {
   fclose(help_file);
 }
 
-int simplewc_str(const char *str, struct fileStats *stats, int state) {
+/* simplewc_str: counts the lines, words and bytes in a string. Main workhorse.
+ * param *str: pointer to the string in question
+ *
+ *
+ * param *stats: pointer to a fileStats struct that will be updated, not
+ * overwritten
+ *
+ * param state: WordState enum used to keep track of words at chunk
+ * boundaries
+ *
+ *
+ * returns: a WordState enum to pass to the next chunk
+ */
+enum WordState simplewc_str(const char *str, struct fileStats *stats,
+                            enum WordState state) {
   int len = strlen(str);
-
-  // `state` defines whether in a word or in whitespace.
-  // 0 = whitespace, 1 = word
-  //
-  // state is passed as an argument to keep track of whether the parser is in a
-  // word or not at the chunk boundary.
 
   int i;
   char c;
@@ -40,12 +59,15 @@ int simplewc_str(const char *str, struct fileStats *stats, int state) {
   for (i = 0; i < len; i++) {
     c = str[i];
     if (isspace(c)) {
-      state = 0;
 
-      if (c == '\n') {stats->lines++;}
+      if (c == '\n') {
+        stats->lines++;
+      }
 
-    } else if (state == 0) {
-      state = 1;
+      state = OUT;
+
+    } else if (state == OUT) {
+      state = IN;
       stats->words++;
     }
     stats->bytes++;
@@ -55,7 +77,7 @@ int simplewc_str(const char *str, struct fileStats *stats, int state) {
 
 void simplewc_file(const char *fileName, struct fileStats *stats) {
   const int chunksize = 64;
-  char buffer[chunksize + 1]; // + 1 so that I can add a \0 character at the end
+  char buffer[chunksize + 1]; // + 1 to have space for a \0 character at the end
   struct fileStats temp_fs = {0, 0, 0};
   /* temp_fs is used to track the stats for this file only, while also updating
    * stats. It's the easiest way I found to print out the values for each file
@@ -69,7 +91,7 @@ void simplewc_file(const char *fileName, struct fileStats *stats) {
   }
 
   size_t bytesRead = 1;
-  int state = 0;
+  enum WordState state = OUT;
 
   while (bytesRead > 0) {
     bytesRead = fread(buffer, sizeof(char), chunksize, f);
@@ -96,3 +118,4 @@ void simplewc(const char **fileNames, int filesCount) {
 }
 
 #endif // SIMPLEWC_H
+

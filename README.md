@@ -46,7 +46,14 @@ For more thorough property-based testing using the [Hypothesis](https://github.c
 
 ## Fuzzing
 
-Run `tests/fuzzing/build-afl.sh` to build [AFL](https://github.com/google/AFL), a brute-force fuzzer driven by a genetic algorithm.
+Run 
 
-Then, run `tests/fuzzing/afl-testing.sh` to start the testing.
+`tests/fuzzing/build-afl.sh`
 
+to build [AFL](https://github.com/google/AFL), a brute-force fuzzer driven by a genetic algorithm.
+
+Then, run 
+
+`tests/fuzzing/afl-testing.sh`
+
+to start the fuzzer.
