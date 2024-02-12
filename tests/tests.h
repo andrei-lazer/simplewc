@@ -6,28 +6,28 @@
 // testing the simplewc_str function
 
 void str_test_bytes() {
-  struct fileStats fs = {0, 0, 0};
+  fileStats fs = {0, 0, 0};
   char s[] = "abcdefghijklmnopqrstuvwxyz";
   simplewc_str(s, &fs, 0);
   assert(fs.bytes == 26);
 }
 
 void str_test_words() {
-  struct fileStats fs = {0, 0, 0};
+  fileStats fs = {0, 0, 0};
   char s[] = "Here are many words about some things that people talk about.";
   simplewc_str(s, &fs, 0);
   assert(fs.words == 11);
 }
 
 void str_test_lines() {
-  struct fileStats fs = {0, 0, 0};
+  fileStats fs = {0, 0, 0};
   char s[] = "Wow!\nSo\nMany\nLines!\n";
   simplewc_str(s, &fs, 0);
   assert(fs.lines == 4);
 }
 
 void str_test_empty() {
-  struct fileStats fs = {0, 0, 0};
+  fileStats fs = {0, 0, 0};
   char s[] = "";
   simplewc_str(s, &fs, 0);
   assert(fs.bytes == 0);
@@ -36,7 +36,7 @@ void str_test_empty() {
 }
 
 void str_test_multiple_spaces() {
-  struct fileStats fs = {0, 0, 0};
+  fileStats fs = {0, 0, 0};
   char s[] = "So         many       spaces";
   simplewc_str(s, &fs, 0);
   assert(fs.bytes == 28);
@@ -45,7 +45,7 @@ void str_test_multiple_spaces() {
 }
 
 void str_test_multiple_lines() {
-  struct fileStats fs = {0, 0, 0};
+  fileStats fs = {0, 0, 0};
   char s[] = "many\n\n\n\n\n new \n\n\n\n\n\n lineeeeee \n\n\n\n\n eeeeeees";
   simplewc_str(s, &fs, 0);
   assert(fs.bytes == 36);
@@ -79,7 +79,7 @@ void file_test_bytes() {
 
   fclose(ftest);
 
-  struct fileStats fs = {0, 0, 0};
+  fileStats fs = {0, 0, 0};
   simplewc_file("test.txt", &fs);
 
   // assert

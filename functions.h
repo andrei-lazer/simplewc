@@ -15,14 +15,14 @@
 enum WordState { OUT, IN };
 
 // simple struct to keep counts all in one place
-struct fileStats {
+typedef struct {
   int lines;
   int words;
   int bytes;
-};
+} fileStats;
 
-/* print_help: used to print the help message when invalid input or the "-h" argument is
- * provided.
+/* print_help: used to print the help message when invalid input or the "-h"
+ * argument is provided.
  */
 void print_help() {
   FILE *help_file;
@@ -49,8 +49,8 @@ void print_help() {
  *
  * returns: a WordState enum to pass to the next chunk
  */
-enum WordState simplewc_str(const char *str, struct fileStats *stats,
-                            enum WordState state) {
+enum WordState simplewc_str(const char *str, fileStats *stats, enum WordState state) {
+
   int len = strlen(str);
 
   int i;
@@ -73,12 +73,13 @@ enum WordState simplewc_str(const char *str, struct fileStats *stats,
     stats->bytes++;
   }
   return state;
+
 }
 
-void simplewc_file(const char *fileName, struct fileStats *stats) {
+void simplewc_file(const char *fileName, fileStats *stats) {
   const int chunksize = 64;
   char buffer[chunksize + 1]; // + 1 to have space for a \0 character at the end
-  struct fileStats temp_fs = {0, 0, 0};
+  fileStats temp_fs = {0, 0, 0};
   /* temp_fs is used to track the stats for this file only, while also updating
    * stats. It's the easiest way I found to print out the values for each file
    * given AND keep track of the total at the end.*/
@@ -108,7 +109,7 @@ void simplewc_file(const char *fileName, struct fileStats *stats) {
 
 void simplewc(const char **fileNames, int filesCount) {
   int i;
-  struct fileStats fs = {0, 0, 0};
+  fileStats fs = {0, 0, 0};
   for (i = 0; i < filesCount; i++) {
     simplewc_file(fileNames[i], &fs);
   }
@@ -118,4 +119,3 @@ void simplewc(const char **fileNames, int filesCount) {
 }
 
 #endif // SIMPLEWC_H
-

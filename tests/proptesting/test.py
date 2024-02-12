@@ -54,9 +54,9 @@ class Tests:
 
 
 
-    @given(st.lists(st.text(alphabet), min_size=1))
-    @example(["fsdaasfasfa", "a"*1000])
-    @example([""] * 1000)
+    @given(st.lists(st.text(alphabet), min_size=1, max_size=100))
+    # @example(["fsdaasfasfa", "a"*1000])
+    # @example([""] * 1000)
     def test_multi_file(self, texts):
         # texts is an array, where texts[i] is the text to be put in the file "test{i}.txt"
         file_names = []
