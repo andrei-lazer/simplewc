@@ -28,7 +28,7 @@ void print_help() {
   FILE *help_file;
   help_file = fopen("./help.txt", "r");
 
-  int c;
+  char c;
 
   while ((c = getc(help_file)) != EOF) {
     putchar(c);
