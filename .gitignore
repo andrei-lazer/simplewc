@@ -2,6 +2,8 @@
 ./tests/.hypothesis/
 ./tests/.pytest_cache/
 
+./tests/proptesting/__pycache__/
+
 .git
 .hypothesis
 .pytest_cache

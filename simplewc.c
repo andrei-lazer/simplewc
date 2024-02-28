@@ -6,7 +6,7 @@ int main(int argc, const char *argv[]) {
   if (argc < 2 || strcmp(argv[1], "-h") == 0) {
 
     print_help();
-    return (0);
+    /* return (0); */
 
   } else if (strcmp(argv[1], "--test") == 0) {
 
