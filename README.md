@@ -2,7 +2,7 @@
 
 Prints the number of lines, words, and bytes in a file. Simplified clone of the `wc` command line tool in UNIX using C.
 
-A variety of testing methods have been implemented in C and Python.
+A variety of testing methods have been implemented in C and Python, most notably fuzz testing.
 
 
 ## Requirements
